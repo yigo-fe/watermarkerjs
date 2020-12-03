@@ -1,4 +1,4 @@
-# watermark.js
+# watermarkerjs
 
 一个可以给页面添加水印的插件，提供两种显示方式svg和canvas
 ## Usage
