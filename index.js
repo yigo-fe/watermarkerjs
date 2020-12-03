@@ -677,24 +677,26 @@ let index = function(text, options) {
 
 
 function waterMarkFn(userInfo) {
-  Watermark(`${userInfo.employee_name} ${userInfo.employee_id}`, {
+  return Watermark(`${userInfo.employee_name} ${userInfo.employee_id}`, {
     selector: '#watermask',
     fontSize: 14,
   })
 }
 
 function AddWaterMark(userInfo) {
+  let watermark = null
   const watermaskDom = document.createElement('div')
   watermaskDom.id = 'watermask'
   watermaskDom.style = 'position:fixed;height:100%;width:100%;pointer-events:none;z-index:10000;top:0;left:0;'
   document.body.appendChild(watermaskDom)
   try {
     if (userInfo) {
-      waterMarkFn(userInfo)
+      watermark = waterMarkFn(userInfo)
     }
   } catch (err) {
     throw new Error('Failed to get user information')
   }
+  return watermark
 }
 
 
