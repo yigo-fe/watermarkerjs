@@ -6,16 +6,21 @@
 ```js
 import Watermark from 'watermarkerjs'
  Watermark('水印', {
-    selector: '#watermask',
-    fontSize: 14,
-    type: 'svg'|'canvas',
+     color: string,
+      fontSize: number,
+      fontWeight: string,
+      fontFamily: string,
+      gap: number,
+      inline: boolean,
+      invisibleColor: string,
+      rotate: number,
+      selector: string,
+      type: WatermarkType,
   })
 ```
 返回一个实例对象
 ```
 实例方法
-addInlineStyle  添加行内样式
-addStyleElement 添加内联样式
 freeze          冻结防止修改样式
 destroy         实例销毁
 ```

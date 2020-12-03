@@ -2,6 +2,7 @@ import './util/polyfill'
 import CanvasWM from './types/CanvasWM'
 import SvgWM from './types/SvgWM'
 export { CanvasWM, SvgWM }
+export const AddWaterMark:any
 export declare enum WatermarkType {
   SVG = 'svg',
   CanvasWM = 'canvas',
