@@ -48,10 +48,10 @@ if (typeof String.prototype.codePointAt !== 'function') {
     let first = str.charCodeAt(index)
     let second
     if (
-      // check if it’s the start of a surrogate pair
-      first >= 0xd800 &&
-      first <= 0xdbff && // high surrogate
-      size > index + 1 // there is a next code unit
+        // check if it’s the start of a surrogate pair
+        first >= 0xd800 &&
+        first <= 0xdbff && // high surrogate
+        size > index + 1 // there is a next code unit
     ) {
       second = str.charCodeAt(index + 1)
       if (second >= 0xdc00 && second <= 0xdfff) {
@@ -87,16 +87,16 @@ and limitations under the License.
 
 var extendStatics = function(d, b) {
   extendStatics =
-    Object.setPrototypeOf ||
-    ({
-      __proto__: [],
-    } instanceof Array &&
+      Object.setPrototypeOf ||
+      ({
+            __proto__: [],
+          } instanceof Array &&
+          function(d, b) {
+            d.__proto__ = b
+          }) ||
       function(d, b) {
-        d.__proto__ = b
-      }) ||
-    function(d, b) {
-      for (let p in b) if (b.hasOwnProperty(p)) d[p] = b[p]
-    }
+        for (let p in b) if (b.hasOwnProperty(p)) d[p] = b[p]
+      }
   return extendStatics(d, b)
 }
 
@@ -466,23 +466,23 @@ let SvgWM = /** @class */ (function(_super) {
     let rotate = _a.rotate
     let width = (len * fontSize) / 2 + gap
     let svg =
-      '\n      <svg xmlns="http://www.w3.org/2000/svg"\n        width="' +
-      width +
-      '" height="' +
-      width +
-      '"\n        style="transform: rotate(' +
-      rotate +
-      'deg); transform-origin: 50% 50%;">\n          <text xmlns="http://www.w3.org/2000/svg"\n            x="50%" y="50%" text-anchor="middle" alignment-baseline="middle"\n            fill="' +
-      color +
-      '"\n            font-weight="' +
-      fontWeight +
-      '"\n            style="font-size: ' +
-      fontSize +
-      'px;"\n            font-family="' +
-      fontFamily +
-      '">\n              ' +
-      wmText +
-      '\n          </text>\n      </svg>\n    '
+        '\n      <svg xmlns="http://www.w3.org/2000/svg"\n        width="' +
+        width +
+        '" height="' +
+        width +
+        '"\n        style="transform: rotate(' +
+        rotate +
+        'deg); transform-origin: 50% 50%;">\n          <text xmlns="http://www.w3.org/2000/svg"\n            x="50%" y="50%" text-anchor="middle" alignment-baseline="middle"\n            fill="' +
+        color +
+        '"\n            font-weight="' +
+        fontWeight +
+        '"\n            style="font-size: ' +
+        fontSize +
+        'px;"\n            font-family="' +
+        fontFamily +
+        '">\n              ' +
+        wmText +
+        '\n          </text>\n      </svg>\n    '
     return 'data:image/svg+xml;base64,' + base64_1.encode(svg)
   }
   SvgWM.prototype.genStyle = function(wmText) {
@@ -493,15 +493,15 @@ let SvgWM = /** @class */ (function(_super) {
     let gap = _a.gap
     let width = (len * fontSize) / 2 + gap
     return (
-      '\n      background-image: url(' +
-      dataURI +
-      '), url(' +
-      dataURI +
-      ');\n      background-repeat: repeat, repeat;\n      background-position: ' +
-      width / 2 +
-      'px ' +
-      width / 2 +
-      'px, 0 0;\n    '
+        '\n      background-image: url(' +
+        dataURI +
+        '), url(' +
+        dataURI +
+        ');\n      background-repeat: repeat, repeat;\n      background-position: ' +
+        width / 2 +
+        'px ' +
+        width / 2 +
+        'px, 0 0;\n    '
     )
   }
   return SvgWM
@@ -677,18 +677,25 @@ let index = function(text, options) {
 
 
 function waterMarkFn(userInfo) {
-  return index(`${userInfo.employee_name} ${userInfo.employee_id}`)
+  const waterMark = index(`${userInfo.employee_name} ${userInfo.employee_id}`, {
+    selector: '#watermask',
+    fontSize: 14,
+  })
+  waterMark.freeze()
+  return waterMark
 }
 
 function AddWaterMark(userInfo) {
+  const watermaskDom = document.createElement('div')
+  watermaskDom.id = 'watermask'
+  watermaskDom.style = 'position:fixed;height:100%;width:100%;pointer-events:none;z-index:10000;top:0;left:0;'
+  document.body.appendChild(watermaskDom)
   if (userInfo.employee_name && userInfo.employee_id) {
     return waterMarkFn(userInfo)
   } else {
     throw new Error('Failed to get user information')
   }
 }
-
-
 
 export default index
 export { CanvasWM, SvgWM, WatermarkType, Watermark, AddWaterMark }
